@@ -30,12 +30,13 @@ class UserSerializer(serializers.ModelSerializer):
 
         return user
 
+
 class AuthTokenSerializer(serializers.Serializer):
     """Serializer for the user autho token."""
     email = serializers.EmailField()
     password = serializers.CharField(
         style={'input_type': 'password'},
-        trim_whitespace = False,
+        trim_whitespace=False,
     )
 
     def validate(self, attrs):
