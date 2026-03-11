@@ -9,35 +9,28 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./:/app
+      - ./app:/app
       - dev-static-data:/vol/web
     command: >
-      sh -c "uv run manage.py wait_for_db &&
-            uv run manage.py migrate &&
-            uv run manage.py runserver 0.0.0.0:8000"
+      sh -c "python manage.py wait_for_db &&
+            python manage.py migrate &&
+            python manage.py runserver 0.0.0.0:8000"
     environment:
       - DB_HOST=db
       - DB_NAME=devdb
       - DB_USER=devuser
       - DB_PASS=changeme
     depends_on:
-      db:
-        condition: service_healthy
+      - db
 
   db:
-    image: postgres:17-alpine
+    image: postgres:13-alpine
     volumes:
       - dev-db-data:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=devdb
       - POSTGRES_USER=devuser
       - POSTGRES_PASSWORD=changeme
-    healthcheck:
-      test: pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}
-      interval: 5s
-      timeout: 30s
-      retries: 5
-      start_period: 30s
 
 volumes:
   dev-db-data:

@@ -1,0 +1,18 @@
+[project]
+name = "recipe-app-api"
+version = "0.1.0"
+description = "Basic UV integration with existing recipe-app-api"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "django>=5.2,<5.3",
+    "djangorestframework>=3.16,<3.17",
+    "psycopg[binary]==3.3.3",
+    "drf-spectacular==0.29.0",
+    "pillow>=12.1.1",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.4",
+]
