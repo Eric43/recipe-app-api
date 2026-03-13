@@ -25,6 +25,7 @@ ENV UV_TOOL_BIN_DIR=/usr/local/bin \
 RUN --mount=type=cache,target=/root/.cache/uv \
     --mount=type=bind,source=uv.lock,target=uv.lock \
     --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
+    --mount=type=cache,target=/root/.ruff_cache \
     uv sync --frozen --no-install-project
 
 # Then, add the rest of the project source code and install it
@@ -47,7 +48,7 @@ RUN mkdir -p /vol/web/media && \
 # removed the group add part here
 # Install the project into `/app`
 # Place executables in the environment at the front of the path
-ENV PATH="/app/.venv/bin:$PATH"
+ENV PATH="/recipe_api_app/app/.venv/bin:$PATH"
 WORKDIR /recipe_api_app/app
 # Reset the entrypoint, don't invoke `uv`
 ENTRYPOINT []
